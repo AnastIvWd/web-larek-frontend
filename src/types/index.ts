@@ -1,11 +1,3 @@
-import {Api} from "../components/base/api"
-
-//Каталог
-export interface IProductList {
-  total: number;
-  items: IProductItem[];
-}
-
 //Товар
 export interface IProductItem {
   id: string;
@@ -13,12 +5,7 @@ export interface IProductItem {
   image: string;
   title: string;
   category: string;
-  price: number
-}
-
-//Ошибка
-export interface IErrorResponse {
-  error: string;
+  price: number;
 }
 
 //Заказ
@@ -28,68 +15,27 @@ export interface IOrder {
   phone: string;
   address: string;
   total: number;
-  items: IProductItem['id'][];
-}
-
-//Ответ успешного создания заказа
-export interface IOrderSuccessResponse {
-  id: string;
-  total: number;
-}
-
-//каталог(класс)
-export interface ICatalogModel {
-  api: Api;
-  products: IProductList;
-  setProductList(): Promise<void>;
-  getProductList(): IProductList;
-}
-
-export interface ICatalogView {
-  catalogPlace: HTMLElement;
-  catalogElement: HTMLElement;
-  renderCatalog(catalog: IProductList): void;
-}
-
-//товар(класс)
-export interface IProductModel {
-  api: Api;
-  product: IProductItem;
-  setProductItem(): Promise<void>;
-  getProductItem(): IProductItem;
-}
-
-export interface IProductView {
-  productPlace: HTMLElement;
-  productElement: HTMLElement;
-  renderProduct(product: IProductItem): void;
-}
-
-//корзина(класс)
-export interface ICartModel {
   items: IProductItem[];
-  addProduct(productId: string): void 
-  removeProduct(productId: string): void 
-  resetCart(): void 
 }
 
-export interface ICartView {
-  cartPlace: HTMLElement;
-  cartElement: HTMLElement;
-  renderCart(products: IProductItem[]): void;
-}
-
-// Заказ(класс)
-export interface IOrderModel {
-  api: Api;
+export interface IAppData {
+  products: IProductItem[];
+  preview: string | null; 
+  cart: IProductItem[];
   order: IOrder;
-  submitOrder(): Promise<void>; //отправка данных на сервер
-  updateInfoOrder(order: IOrder): void; // обновление информации в заказе
+  error: string | null;
+  addProductInCart(product: IProductItem): void;
+  deleteProductFromCart(productId: string): void;
+  getProductItem(productId: string): IProductItem;
+  checkValidation(data: Record<keyof TValidation, string>):boolean;
+  setPaymentInfo(paymentInfo: TPaymentInfo):void;
+  setOrderContacts(contacts: TOrderContacts):void;
+  resetCart():void;
 }
 
-export interface IOrderView {
-  orderPlace: HTMLElement;
-  orderElement: HTMLElement;
-  renderOrder(): void;
-  renderOrderStatus(total: IOrder['total']): void;
-}
+export type TProductInfo = Pick<IProductItem, 'category' | 'title' | 'description' | 'price'>;
+export type TCartInfo = Pick<IOrder, 'items' | 'total'>;
+export type TPaymentInfo = Pick<IOrder, 'payment' | 'address'>;
+export type TOrderContacts = Pick<IOrder, 'email' | 'phone'>;
+export type TSuccess = Pick<IOrder, 'total'>;
+type TValidation = TPaymentInfo & TOrderContacts;
