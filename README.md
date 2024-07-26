@@ -63,15 +63,24 @@ export interface IOrder {
   address: string;
   total: number;
   items: IProductItem[];
-  _id: string;
 }
 ```
 
-Интерфейс для модели данных товаров
+Интерфейс для модели данных 
 ``` TS
-export interface IProductsData {
+export interface IAppData {
   products: IProductItem[];
-  preview: string | null; //сюда передается id товара, чтобы понимать какой именно используется
+  preview: string | null; 
+  cart: IProductItem[];
+  order: IOrder;
+  error: string | null;
+  addProductInCart(product: IProductItem): void;
+  deleteProductFromCart(productId: string): void;
+  getProductItem(productId: string): IProductItem;
+  checkValidation(data: Record<keyof TValidation, string>):boolean;
+  setPaymentInfo(paymentInfo: TPaymentInfo):void;
+  setOrderContacts(contacts: TOrderContacts):void;
+  resetCart():void;
 }
 ```
 

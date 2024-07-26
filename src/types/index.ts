@@ -1,6 +1,6 @@
 //Товар
 export interface IProductItem {
-  id: string;
+  _id: string;
   description: string;
   image: string;
   title: string;
