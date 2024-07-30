@@ -14,8 +14,6 @@ export interface IOrder {
   email: string;
   phone: string;
   address: string;
-  total: number;
-  items: IProductItem[];
 }
 
 export interface IAppData {
@@ -31,11 +29,11 @@ export interface IAppData {
   setPaymentInfo(paymentInfo: TPaymentInfo):void;
   setOrderContacts(contacts: TOrderContacts):void;
   resetCart():void;
+  getItemsTotal(): number;
+  getCartItems(): IProductItem[];
 }
 
 export type TProductInfo = Pick<IProductItem, 'category' | 'title' | 'description' | 'price'>;
-export type TCartInfo = Pick<IOrder, 'items' | 'total'>;
 export type TPaymentInfo = Pick<IOrder, 'payment' | 'address'>;
 export type TOrderContacts = Pick<IOrder, 'email' | 'phone'>;
-export type TSuccess = Pick<IOrder, 'total'>;
 type TValidation = TPaymentInfo & TOrderContacts;
