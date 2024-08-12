@@ -30,10 +30,9 @@ export interface IAppData {
   setOrderContacts(contacts: TOrderContacts):void;
   resetCart():void;
   getItemsTotal(): number;
-  getCartItems(): IProductItem[];
 }
 
 export type TProductInfo = Pick<IProductItem, 'category' | 'title' | 'description' | 'price'>;
 export type TPaymentInfo = Pick<IOrder, 'payment' | 'address'>;
 export type TOrderContacts = Pick<IOrder, 'email' | 'phone'>;
-type TValidation = TPaymentInfo & TOrderContacts;
+export type TValidation = TPaymentInfo & TOrderContacts;
