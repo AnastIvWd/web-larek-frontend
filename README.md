@@ -249,7 +249,7 @@ export type ApiOrderResponse = {
 - `setCartTotal(total: number)` - обновляет итоговую сумму в элементе суммы корзины
 - `setCanCreateOrder(value: boolean)` - обновляет аттрибут `disabled` у кнопки подтверждения корзины
 
-#### Класс `Product`
+#### Класс `ProductView`
 Отвечает за отображение карточки товара, задавая в ней: категорию, название, описание, изображение, цену. В конструктор класса передается экземпляр `EventEmitter` для создания события. В конструкотре происходит поиск и схоранение в свойства все варианты верски карточки товаров.\
 Свойства:
 - `private listProductEl: HTMLElement`- вариант отображения товара в списке
@@ -257,9 +257,10 @@ export type ApiOrderResponse = {
 - `private previewProductEl: HTMLElement`- вариант отображения товара в модальном окне
 - `private events: EventEmitter`- наследник класса `EventEmitter`
 Методы:
+- `private getCategoryClass(category: string)` - назначает соответствующие классы для стилизации товаров в зависимости от их категории.
 - `createListElement(product: IProductItem)` - создает вариант отображения элемента в списке и добваляет нобходимые обработчики событий
 - `createPreviewElement(product: IProductItem, isInCart: boolean)` - создает вариант отображения элемента в модальном окне и добваляет нобходимые обработчики событий 
-- `createChartElement(product: IProductItem)` - создает вариант отображения элемента в корзине и добваляет нобходимые обработчики событий
+- `createChartElement(product: IProductItem, listNum: number)` - создает вариант отображения элемента в корзине и добваляет нобходимые обработчики событий
 
 #### Класс `ProductContainer`
 Реализует отображение каталога товаров на главной странице. Конструктор производит поиск элемента на странице и сохранаяет его в свойство `_view`.\

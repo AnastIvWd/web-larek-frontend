@@ -56,9 +56,9 @@ eventEmmiter.on(EventNamesEnum.DELETE_PRODUCT_FROM_CART, ({productId}: {productI
   appData.deleteProductFromCart(productId);
   let cartTotal = 0;
   
-  const cartItems = appData.cart.map(item => {
+  const cartItems = appData.cart.map((item, idx) => {
     cartTotal += item.price;
-    return productView.createChartElement(item)
+    return productView.createChartElement(item, idx + 1)
   });
 
   cart.setCartContent(cartItems);
@@ -69,9 +69,9 @@ eventEmmiter.on(EventNamesEnum.DELETE_PRODUCT_FROM_CART, ({productId}: {productI
 
 eventEmmiter.on(EventNamesEnum.OPEN_CART, () => {
   let cartTotal = 0;
-  const cartItems = appData.cart.map(item => {
+  const cartItems = appData.cart.map((item, idx) => {
     cartTotal += item.price;
-    return productView.createChartElement(item)
+    return productView.createChartElement(item, idx + 1)
   });
 
   cart.setCartContent(cartItems);

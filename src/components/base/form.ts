@@ -42,5 +42,6 @@ export class Form<T> {
     this.inputEls.forEach(input => {
       input.value = '';
     });
+    this.setCanSubmit(false);
   }
 }

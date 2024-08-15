@@ -20,6 +20,20 @@ export class ProductView {
     this.previewProductEl = previewProductTemplate.querySelector('.card');
   }
 
+  private getCategoryClass(category: string) {
+    if (category === 'софт-скил') {
+      return 'card__category_soft';
+    } else if (category === 'хард-скил') {
+      return 'card__category_hard';
+    } else if (category === 'дополнительное') {
+      return 'card__category_additional';
+    } else if (category === 'кнопка') {
+      return 'card__category_button';
+    } else {
+      return 'card__category_other';
+    }
+  }
+
   createListElement(product: IProductItem) {
     const productListEl = this.listProductEl.cloneNode(true) as HTMLElement;
 
@@ -28,10 +42,12 @@ export class ProductView {
     const title = productListEl.querySelector('.card__title');
     const price = productListEl.querySelector('.card__price');
 
+    category.classList.add(this.getCategoryClass(product.category))
+
     img.src = `${CDN_URL}${product.image}`;
     category.textContent = product.category;
     title.textContent = product.title;
-    price.textContent = `${product.price || 0} синапсов`;
+    price.textContent = product.price ? `${product.price} синапсов` : 'Бесценно';
 
     productListEl.addEventListener('click', () => this.events.emit(EventNamesEnum.OPEN_PRODUCT_MODAL, product))
 
@@ -48,11 +64,13 @@ export class ProductView {
     const price = productPreviewEl.querySelector('.card__price')
     const button = productPreviewEl.querySelector('.card__button') as HTMLButtonElement;
 
+    category.classList.add(this.getCategoryClass(product.category))
+
     img.src = `${CDN_URL}${product.image}`;
     category.textContent = product.category;
     title.textContent = product.title;
     description.textContent = product.description;
-    price.textContent = `${product.price || 0} синапсов`;
+    price.textContent = product.price ? `${product.price} синапсов` : 'Бесценно';
 
     if (!product.price || isInCart) {
       button.disabled = true;
@@ -66,15 +84,17 @@ export class ProductView {
     return productPreviewEl;
   }
 
-  createChartElement(product: IProductItem) {
+  createChartElement(product: IProductItem, listNum: number) {
     const productCartEl = this.cartProductEl.cloneNode(true) as HTMLElement;
     
     const title = productCartEl.querySelector('.card__title')
     const price = productCartEl.querySelector('.card__price')
     const button = productCartEl.querySelector('.card__button') as HTMLElement;
+    const listNumEl = productCartEl.querySelector('.basket__item-index');
     
     title.textContent = product.title;
     price.textContent = `${product.price} синапсов`;
+    listNumEl.textContent = `${listNum}`
 
     button.addEventListener('click', () => this.events.emit(EventNamesEnum.DELETE_PRODUCT_FROM_CART, {productId: product.id}))
 
